@@ -3,7 +3,6 @@ import React from 'react';
 import './SpellInfo.css'
 
 const SpellInfo = (props) => {
-    console.log(props.data)
     return(
         <div className='spell-info'>
             <div className='name-level'>
@@ -17,8 +16,8 @@ const SpellInfo = (props) => {
             <div className='game-info'>
                 {props.data.concentration ? <div className='game-item'><h2>Concentration Required</h2></div> : null}
                 {props.data.ritual ? <div className='game-item'><h2>Ritual Required</h2></div> : null}
-                {props.data.damage ? <div className='game-item'><div><h2>Damage Type: {props.data.damage.damage_type.name}</h2></div> <div><h2>Damage At Slot Level:</h2>{Object.keys(props.data.damage.damage_at_slot_level).map((key, index)=> {return <p key={index}>Level {Object.keys(props.data.damage.damage_at_slot_level)[index]} :{props.data.damage.damage_at_slot_level[key]}</p>})}</div></div>: null}
-                {props.data.dc ? <div className='game-item'><h2>DC Type: {props.data.dc.dc_type.name}</h2> <h4>On success: {props.data.dc.dc_success === 'none' ? '0' : 'Half'} Damage</h4></div> : null}
+                {props.data.damage ? <div className='game-item'><div><h2>Damage Type: {props.data.damage.damage_type.name}</h2></div> {props.data.damage.damage_at_slot_level ? <div><h2>Damage At Slot Level:</h2>{Object.keys(props.data.damage.damage_at_slot_level).map((key, index)=> {return <p key={index}>Level {Object.keys(props.data.damage.damage_at_slot_level)[index]} :{props.data.damage.damage_at_slot_level[key]}</p>})}</div> :null }</div>: null}
+                {props.data.dc ? <div className='game-item'><h2>DC Type: {props.data.dc.dc_type.name}</h2> <h4>On success: {props.data.dc.dc_success === 'none' ? '0' : props.data.dc.dc_success.charAt(0).toUpperCase()+props.data.dc.dc_success.slice(1)} Damage</h4></div> : null}
                 <div className='game-item'>
                     <h2>Range: {props.data.range}</h2>
                 </div>
@@ -35,6 +34,7 @@ const SpellInfo = (props) => {
                 {props.data.material ? <div className='game-item'><h2>Materials Needed: {props.data.material}</h2></div> : null}
             </div>
             <h3>School: {props.data.school.name}</h3>
+            <h3>Classes: {props.data.classes.join(', ')}</h3>
             <h4>Description:</h4>
             {props.data.desc.map(text => {
                 return <p key={text}>{text}</p>
