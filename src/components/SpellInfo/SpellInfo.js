@@ -3,6 +3,10 @@ import React from 'react';
 import './SpellInfo.css'
 
 const SpellInfo = (props) => {
+
+    const classes = Object.keys(props.data.classes).map((key, index) => { return props.data.classes[index].name})
+    const subclasses = Object.keys(props.data.subclasses).map((key, index) => { return props.data.subclasses[index].name})
+    
     return(
         <div className='spell-info'>
             <div className='name-level'>
@@ -34,7 +38,8 @@ const SpellInfo = (props) => {
                 {props.data.material ? <div className='game-item'><h2>Materials Needed: {props.data.material}</h2></div> : null}
             </div>
             <h3>School: {props.data.school.name}</h3>
-            <h3>Classes: {props.data.classes.join(', ')}</h3>
+            <h3>Classes: {classes.join(', ')}</h3>
+            {subclasses > 0 ? <h3>Subclasses: {subclasses.join(', ')}</h3> : <h3>Subclasses: N/A</h3>}  
             <h4>Description:</h4>
             {props.data.desc.map(text => {
                 return <p key={text}>{text}</p>
