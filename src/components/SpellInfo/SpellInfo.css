@@ -1,3 +1,7 @@
+.spell-info{
+    width: 90vw;
+}
+
 .name-level{
     display: flex;
     flex-direction: row;
