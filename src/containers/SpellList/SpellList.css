@@ -1,0 +1,8 @@
+.spell-list{
+    display: flex;
+    flex-direction: column;
+    
+}
+.spell{
+    margin: auto
+}

@@ -1,0 +1,34 @@
+.name-level{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    
+}
+
+.game-info{
+    display: flex;
+    justify-content: space-evenly;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.game-item{
+    text-align: center;
+    border: 4px solid black;
+    border-radius: 20px;
+    padding: 10px;
+    margin: 10px;
+    flex-grow: 1;
+}
+
+#spell-name{
+    padding-left: 10px;
+    margin-right: 1em;
+    text-align: left;
+}
+
+#spell-level{
+    padding-right: 10px;
+    margin-left: 1em;
+    text-align: right;
+}
