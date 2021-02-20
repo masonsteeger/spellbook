@@ -14,7 +14,7 @@ const SpellInfo = (props) => {
                     <h1>{props.data.name}</h1>
                 </div>
                 <div id='spell-level'>
-                    <h1>Level {props.data.level} Spell</h1>
+                    {props.data.level > 0 ? <h1>Level {props.data.level} Spell</h1> : <h1>Cantrip</h1>}
                 </div>
             </div>
             <div className='game-info'>

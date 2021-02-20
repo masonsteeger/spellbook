@@ -30,27 +30,58 @@ const useStyles = makeStyles((theme) => ({
 const Navigation = (props) => {
     const classes = useStyles();
     const [toggle, setToggle] = useState(classes.toggleHide)
+    const [classAnchor, setClassAnchor] = useState(null)
+    const [levelAnchor, setLevelAnchor] = useState(null)
+    const [schoolAnchor, setSchoolAnchor] = useState(null)
     const [classFilter, setClassFilter] = useState('Filter By Class')
-    const [anchorEl, setAnchorEl] = useState(null)
     const [levelFilter, setLevelFilter] = useState('Filter By Level')
+    const [schoolFilter, setSchoolFilter] = useState('Filter By School')
 
 
     const menuToggle = () => {
         toggle === classes.toggleHide ? setToggle(classes.toggleShow) : setToggle(classes.toggleHide)
     }
 
-    const handleOpenFilter = (event) => {
-        setAnchorEl(event.currentTarget)
+    const handleOpenFilter = (event, type) => {
+        switch (true){
+            case type === 'class':
+                setClassAnchor(event.currentTarget)
+                break;
+            case type === 'level':
+                setLevelAnchor(event.currentTarget)
+                break;
+            case type === 'school':
+                setSchoolAnchor(event.currentTarget)
+            default:
+                return;
+        }
     }
     
-    const handleCloseFilter = () => {
-        setAnchorEl(null)
+    const handleCloseFilter = (type) => {
+        switch (true){
+            case type === 'class':
+                setClassAnchor(null)
+                break;
+            case type === 'level':
+                setLevelAnchor(null)
+                break;
+            default:
+                return;
+        }
     }
 
      const handleClassFilter = (event) => {
         props.setApiCall(`https://www.dnd5eapi.co/api/classes/${event.target.id}/spells`)
-        setClassFilter(event.target.id.charAt(0).toUpperCase() + event.target.id.slice(1))
-        setAnchorEl(null)
+        setClassFilter(event.target.id)
+        setLevelFilter('Filter By Level')
+        setClassAnchor(null)
+     }
+
+     const handleLevelFilter = (event) => {
+        props.setApiCall(`https://www.dnd5eapi.co/api/spells?level=${event.target.id}`)
+        setLevelFilter(event.target.id)
+        setClassFilter('Filter By Class')
+        setLevelAnchor(null)
      }
 
     return (
@@ -66,13 +97,12 @@ const Navigation = (props) => {
             <Button color="inherit">Login</Button>
             </Toolbar>
             <Toolbar className={toggle}>
-            <Button aria-controls="class-menu" aria-haspopup="true" onClick={handleOpenFilter}>{classFilter}</Button>
+            <Button aria-controls="class-menu" aria-haspopup="true" onClick={(event) => handleOpenFilter(event,'class')}>{classFilter}</Button>
             <Menu
                 id="class-menu"
-                anchorEl={anchorEl}
-                keepMounted
-                open={Boolean(anchorEl)}
-                onClose={handleCloseFilter}
+                anchorEl={classAnchor}
+                open={Boolean(classAnchor)}
+                onClose={() => handleCloseFilter('class')}
             >
                 <MenuItem id='bard' onClick={handleClassFilter}>Bard</MenuItem>
                 <MenuItem id='cleric' onClick={handleClassFilter}>Cleric</MenuItem>
@@ -83,22 +113,39 @@ const Navigation = (props) => {
                 <MenuItem id='warlock' onClick={handleClassFilter}>Warlock</MenuItem>
                 <MenuItem id='wizard' onClick={handleClassFilter}>Wizard</MenuItem>
             </Menu>
-            <Button aria-controls="level-menu" aria-haspopup="true" onClick={handleOpenFilter}>{levelFilter}</Button>
+            <Button aria-controls="level-menu" aria-haspopup="true" onClick={(event) => handleOpenFilter(event,'level')}>{levelFilter === 'Filter By Level' ? levelFilter : levelFilter > 0 ? `Level ${levelFilter}` : 'Cantrips'}</Button>
             <Menu
                 id="level-menu"
-                anchorEl={anchorEl}
-                keepMounted
-                open={Boolean(anchorEl)}
-                onClose={handleCloseFilter}
+                anchorEl={levelAnchor}
+                open={Boolean(levelAnchor)}
+                onClose={() => handleCloseFilter('level')}
             >
-                <MenuItem id='bard' onClick={handleClassFilter}>Level 0</MenuItem>
-                <MenuItem id='cleric' onClick={handleClassFilter}>Level 1</MenuItem>
-                <MenuItem id='druid' onClick={handleClassFilter}>Level 2</MenuItem>
-                <MenuItem id='paladin' onClick={handleClassFilter}>Level 3</MenuItem>
-                <MenuItem id='ranger' onClick={handleClassFilter}>Level 4</MenuItem>
-                <MenuItem id='sorcerer' onClick={handleClassFilter}>Level 5</MenuItem>
-                <MenuItem id='warlock' onClick={handleClassFilter}>Level 6</MenuItem>
-                <MenuItem id='wizard' onClick={handleClassFilter}>Level 7</MenuItem>
+                <MenuItem id='0' onClick={handleLevelFilter}>Cantrips</MenuItem>
+                <MenuItem id='1' onClick={handleLevelFilter}>Level 1</MenuItem>
+                <MenuItem id='2' onClick={handleLevelFilter}>Level 2</MenuItem>
+                <MenuItem id='3' onClick={handleLevelFilter}>Level 3</MenuItem>
+                <MenuItem id='4' onClick={handleLevelFilter}>Level 4</MenuItem>
+                <MenuItem id='5' onClick={handleLevelFilter}>Level 5</MenuItem>
+                <MenuItem id='6' onClick={handleLevelFilter}>Level 6</MenuItem>
+                <MenuItem id='7' onClick={handleLevelFilter}>Level 7</MenuItem>
+                <MenuItem id='8' onClick={handleLevelFilter}>Level 8</MenuItem>
+                <MenuItem id='9' onClick={handleLevelFilter}>Level 9</MenuItem>
+            </Menu>
+            <Button aria-controls="school-menu" aria-haspopup="true" onClick={(event) => handleOpenFilter(event,'school')}>{schoolFilter}</Button>
+            <Menu
+                id="school-menu"
+                anchorEl={schoolAnchor}
+                open={Boolean(schoolAnchor)}
+                onClose={() => handleCloseFilter('level')}
+            >
+                <MenuItem id='Abjuration' onClick={handleLevelFilter}>Abjuration</MenuItem>
+                <MenuItem id='Conjuration' onClick={handleLevelFilter}>Conjuration</MenuItem>
+                <MenuItem id='Divination' onClick={handleLevelFilter}>Divination</MenuItem>
+                <MenuItem id='Enchantment' onClick={handleLevelFilter}>Enchantment</MenuItem>
+                <MenuItem id='Evocation' onClick={handleLevelFilter}>Evocation</MenuItem>
+                <MenuItem id='Illusion' onClick={handleLevelFilter}>Illusion</MenuItem>
+                <MenuItem id='Necromany' onClick={handleLevelFilter}>Necromany</MenuItem>
+                <MenuItem id='Transmutation' onClick={handleLevelFilter}>Transmutation</MenuItem>
             </Menu>
             </Toolbar>
         </AppBar>
