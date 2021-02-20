@@ -72,7 +72,7 @@ const Spell = (props) => {
                 }}
                 open={open}
                 anchorEl={anchorEl}
-                marginThreshold= {16}
+                marginThreshold= {8}
                 anchorReference="anchorPosition"
                 anchorPosition={{ top: 0, left: 0 }}
                 anchorOrigin={{

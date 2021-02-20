@@ -18,6 +18,8 @@ const useStyles = makeStyles((theme) => ({
     },
     title: {
       flexGrow: 1,
+      fontSize: '48px',
+      color: 'white'
     },
     toggleShow: {
         display: 'block'
@@ -30,6 +32,7 @@ const useStyles = makeStyles((theme) => ({
 const Navigation = (props) => {
     const classes = useStyles();
     const [toggle, setToggle] = useState(classes.toggleHide)
+    const [title, setTitle] =useState('All')
     const [classAnchor, setClassAnchor] = useState(null)
     const [levelAnchor, setLevelAnchor] = useState(null)
     const [schoolAnchor, setSchoolAnchor] = useState(null)
@@ -77,25 +80,39 @@ const Navigation = (props) => {
      const handleClassFilter = (event) => {
         props.setApiCall(`https://www.dnd5eapi.co/api/classes/${event.target.id}/spells`)
         setClassFilter(event.target.id)
+        setTitle(event.target.id.charAt(0).toUpperCase()+event.target.id.slice(1))
         setLevelFilter('Filter By Level')
         setSchoolFilter('Filter By School')
         setClassAnchor(null)
+        menuToggle();
      }
 
      const handleLevelFilter = (event) => {
         props.setApiCall(`https://www.dnd5eapi.co/api/spells?level=${event.target.id}`)
         setLevelFilter(event.target.id)
+        setTitle(`Level ${event.target.id}`)
         setClassFilter('Filter By Class')
         setSchoolFilter('Filter By School')
         setLevelAnchor(null)
+        menuToggle();
      }
 
      const handleSchoolFilter = (event) => {
         props.setApiCall(`https://www.dnd5eapi.co/api/spells?school=${event.target.id}`)
         setSchoolFilter(event.target.id)
+        setTitle(event.target.id)
         setLevelFilter('Filter By Level')
         setClassFilter('Filter By Class')
         setSchoolAnchor(null)
+        menuToggle();
+     }
+
+     const resetFilters = () => {
+        props.setApiCall('https://www.dnd5eapi.co/api/spells')
+        setClassFilter('Filter By Class')
+        setLevelFilter('Filter By Level')
+        setSchoolFilter('Filter By School')
+        setTitle('All')
      }
 
     return (
@@ -105,9 +122,9 @@ const Navigation = (props) => {
             <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu" onClick={menuToggle}>
                 <MenuIcon />
             </IconButton>
-            <Typography variant="h6" className={classes.title} onClick={() => props.setApiCall('https://www.dnd5eapi.co/api/spells')+setClassFilter('Filter By Class')}>
+            <Button className={classes.title} onClick={resetFilters}>
                 DND 5E SpellBook
-            </Typography>
+            </Button>
             <Button color="inherit">Login</Button>
             </Toolbar>
             <Toolbar className={toggle}>
@@ -163,6 +180,8 @@ const Navigation = (props) => {
             </Menu>
             </Toolbar>
         </AppBar>
+        <br />
+        <Typography variant='h1'>{title === 'Level 0' ? 'Cantrips' : `${title} Spells`}</Typography>
         </div>
     );
 }
