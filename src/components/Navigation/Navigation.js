@@ -50,8 +50,9 @@ const Navigation = (props) => {
             case type === 'level':
                 setLevelAnchor(event.currentTarget)
                 break;
-            case type === 'school':
+           case type === 'school':
                 setSchoolAnchor(event.currentTarget)
+                break; 
             default:
                 return;
         }
@@ -65,6 +66,9 @@ const Navigation = (props) => {
             case type === 'level':
                 setLevelAnchor(null)
                 break;
+            case type === 'school':
+                setSchoolAnchor(null)
+                break;
             default:
                 return;
         }
@@ -74,6 +78,7 @@ const Navigation = (props) => {
         props.setApiCall(`https://www.dnd5eapi.co/api/classes/${event.target.id}/spells`)
         setClassFilter(event.target.id)
         setLevelFilter('Filter By Level')
+        setSchoolFilter('Filter By School')
         setClassAnchor(null)
      }
 
@@ -81,7 +86,16 @@ const Navigation = (props) => {
         props.setApiCall(`https://www.dnd5eapi.co/api/spells?level=${event.target.id}`)
         setLevelFilter(event.target.id)
         setClassFilter('Filter By Class')
+        setSchoolFilter('Filter By School')
         setLevelAnchor(null)
+     }
+
+     const handleSchoolFilter = (event) => {
+        props.setApiCall(`https://www.dnd5eapi.co/api/spells?school=${event.target.id}`)
+        setSchoolFilter(event.target.id)
+        setLevelFilter('Filter By Level')
+        setClassFilter('Filter By Class')
+        setSchoolAnchor(null)
      }
 
     return (
@@ -136,16 +150,16 @@ const Navigation = (props) => {
                 id="school-menu"
                 anchorEl={schoolAnchor}
                 open={Boolean(schoolAnchor)}
-                onClose={() => handleCloseFilter('level')}
+                onClose={() => handleCloseFilter('school')}
             >
-                <MenuItem id='Abjuration' onClick={handleLevelFilter}>Abjuration</MenuItem>
-                <MenuItem id='Conjuration' onClick={handleLevelFilter}>Conjuration</MenuItem>
-                <MenuItem id='Divination' onClick={handleLevelFilter}>Divination</MenuItem>
-                <MenuItem id='Enchantment' onClick={handleLevelFilter}>Enchantment</MenuItem>
-                <MenuItem id='Evocation' onClick={handleLevelFilter}>Evocation</MenuItem>
-                <MenuItem id='Illusion' onClick={handleLevelFilter}>Illusion</MenuItem>
-                <MenuItem id='Necromany' onClick={handleLevelFilter}>Necromany</MenuItem>
-                <MenuItem id='Transmutation' onClick={handleLevelFilter}>Transmutation</MenuItem>
+                <MenuItem id='Abjuration' onClick={handleSchoolFilter}>Abjuration</MenuItem>
+                <MenuItem id='Conjuration' onClick={handleSchoolFilter}>Conjuration</MenuItem>
+                <MenuItem id='Divination' onClick={handleSchoolFilter}>Divination</MenuItem>
+                <MenuItem id='Enchantment' onClick={handleSchoolFilter}>Enchantment</MenuItem>
+                <MenuItem id='Evocation' onClick={handleSchoolFilter}>Evocation</MenuItem>
+                <MenuItem id='Illusion' onClick={handleSchoolFilter}>Illusion</MenuItem>
+                <MenuItem id='Necromany' onClick={handleSchoolFilter}>Necromany</MenuItem>
+                <MenuItem id='Transmutation' onClick={handleSchoolFilter}>Transmutation</MenuItem>
             </Menu>
             </Toolbar>
         </AppBar>
