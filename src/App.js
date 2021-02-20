@@ -7,13 +7,14 @@ import './App.css';
 const App = () => {
 
   const [spellDisplay, setSpellDisplay] = useState({})
-  const [apiCall, setApiCall] = useState('https://www.dnd5eapi.co/api/spells')
+  const [apiCall, setApiCall] = useState(`https://api.open5e.com/spells/?dnd_class__icontains=&level__iexact=&school__iexact=&slug__in=`)
   const [loading, setLoading] = useState(true)
 
   useEffect( () => {
     axios.get(apiCall)
     .then((response) => {
-      setSpellDisplay(response.data.results)
+      setSpellDisplay(response.data)
+
       setLoading(false)
     }).catch(error => {
       console.log(error)
@@ -28,7 +29,7 @@ const App = () => {
         <Navigation setApiCall={setApiCall}/>
         <div className='parchment'>
           <br /><br />
-          <SpellList spellDisplay={spellDisplay}/>
+          <SpellList spellDisplay={spellDisplay} setApiCall={setApiCall}/>
         </div>
       </div>
     );

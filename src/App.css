@@ -10,6 +10,7 @@
   background-color: #d8cbaa;
   border: 20px solid transparent;
   border-image: url('./icons/frayed.png') 30 repeat;
+  border-radius: 5px;
 }
 
 @font-face {

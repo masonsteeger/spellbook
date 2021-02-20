@@ -120,7 +120,7 @@ const Navigation = (props) => {
      }
 
      const resetFilters = () => {
-        props.setApiCall('https://www.dnd5eapi.co/api/spells')
+        props.setApiCall(`https://api.open5e.com/spells/?dnd_class__icontains=&level__iexact=&school__iexact=&slug__in=`)
         setClassFilter('Filter By Class')
         setLevelFilter('Filter By Level')
         setSchoolFilter('Filter By School')
@@ -187,7 +187,7 @@ const Navigation = (props) => {
                 <MenuItem id='Enchantment' onClick={handleSchoolFilter}>Enchantment</MenuItem>
                 <MenuItem id='Evocation' onClick={handleSchoolFilter}>Evocation</MenuItem>
                 <MenuItem id='Illusion' onClick={handleSchoolFilter}>Illusion</MenuItem>
-                <MenuItem id='Necromany' onClick={handleSchoolFilter}>Necromany</MenuItem>
+                <MenuItem id='Necromancy' onClick={handleSchoolFilter}>Necromancy</MenuItem>
                 <MenuItem id='Transmutation' onClick={handleSchoolFilter}>Transmutation</MenuItem>
             </Menu>
             </Toolbar>

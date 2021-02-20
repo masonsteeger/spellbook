@@ -1,8 +1,13 @@
 .spell-list{
     display: flex;
     flex-direction: column;
-    
+
 }
 .spell{
     margin: auto
+}
+.bottom-nav{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
 }
