@@ -11,6 +11,12 @@ const useStyles = makeStyles((theme) => ({
     paper: {
       padding: theme.spacing(1),
     },
+    hover: {
+        textDecoration: 'underline'
+    },
+    nohover: {
+        textDecoration: 'none'
+    }
   }));
 
 const Spell = (props) => {
@@ -19,10 +25,15 @@ const Spell = (props) => {
     const [anchorEl, setAnchorEl] = useState(null)
     const [isLoading, setIsLoading] = useState(false)
     const [spellInfo, setSpellInfo] = useState(null)
+    const [hoverClass, setHoverClass] = useState(classes.nohover)
 
     useEffect(()=> {
         setIsLoading(false)
     }, [spellInfo])
+
+    const changeClass = (event) => {
+        hoverClass === classes.hover ? setHoverClass(classes.nohover) : setHoverClass(classes.hover)
+    }
 
     const handlePopoverOpen = (event) => {
         setIsLoading(true)
@@ -47,7 +58,11 @@ const Spell = (props) => {
             <Typography
                 id={props.index}
                 aria-describedby={id}
+                className={hoverClass}
                 onClick={handlePopoverOpen}
+                onMouseOver={changeClass}
+                onMouseLeave={changeClass}
+                variant='h4'
             >{props.spellName}
             </Typography>
             <Popover
@@ -57,7 +72,7 @@ const Spell = (props) => {
                 }}
                 open={open}
                 anchorEl={anchorEl}
-                marginThreshold= {8}
+                marginThreshold= {16}
                 anchorReference="anchorPosition"
                 anchorPosition={{ top: 0, left: 0 }}
                 anchorOrigin={{

@@ -8,14 +8,25 @@ const SpellList = (props) => {
     useEffect(() => {
 
     }, [])
+    let sorted = props.spellDisplay.map(spell => {
+        return {index: spell.index,  spellName: spell.name}
+    })
 
+    sorted.sort((a, b) => {
+        if(a.spellName > b.spellName){
+            return 1
+        }
+        if(a.spellName < b.spellName){
+            return -1
+        }
+        return 0
+    })
     return(
         <div className="spell-list">
-            {console.log(props.spellDisplay)}
-            {props.spellDisplay.results.map(spell => {
-                return (
-                    <Spell key={spell.index} index={spell.index} spellName={spell.name}/>
-                )})}
+            {
+                sorted.map(spell => {
+                    return <div key={spell.index} style={{margin: '10px 0'}}><Spell index={spell.index} spellName = {spell.spellName}/></div>
+            })}
         </div>
     )
 }
