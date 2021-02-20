@@ -13,13 +13,25 @@ const useStyles = makeStyles((theme) => ({
     root: {
       flexGrow: 1,
     },
+    navbar: {
+        backgroundColor: '#941B0C'
+    },
     menuButton: {
       marginRight: theme.spacing(2),
     },
+    logo : {
+        flexGrow: 1,
+        fontSize: '16px', 
+        color: 'white'
+    },
     title: {
-      flexGrow: 1,
-      fontSize: '48px',
-      color: 'white'
+        fontFamily: 'ComicRunes',
+        fontSize: '60px',
+        color: 'white',
+        textShadow: '0 0 20px white'
+    },
+    filter: {
+        color: 'white'
     },
     toggleShow: {
         display: 'block'
@@ -118,17 +130,17 @@ const Navigation = (props) => {
     return (
         <div className={classes.root}>
         <AppBar position="static">
-            <Toolbar>
+            <Toolbar className={classes.navbar}>
             <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu" onClick={menuToggle}>
                 <MenuIcon />
             </IconButton>
-            <Button className={classes.title} onClick={resetFilters}>
+            <Button className={classes.logo} onClick={resetFilters}>
                 DND 5E SpellBook
             </Button>
             <Button color="inherit">Login</Button>
             </Toolbar>
-            <Toolbar className={toggle}>
-            <Button aria-controls="class-menu" aria-haspopup="true" onClick={(event) => handleOpenFilter(event,'class')}>{classFilter}</Button>
+            <Toolbar className={`${toggle} ${classes.navbar}`}>
+            <Button className={classes.filter} aria-controls="class-menu" aria-haspopup="true" onClick={(event) => handleOpenFilter(event,'class')}>{classFilter}</Button>
             <Menu
                 id="class-menu"
                 anchorEl={classAnchor}
@@ -144,7 +156,7 @@ const Navigation = (props) => {
                 <MenuItem id='warlock' onClick={handleClassFilter}>Warlock</MenuItem>
                 <MenuItem id='wizard' onClick={handleClassFilter}>Wizard</MenuItem>
             </Menu>
-            <Button aria-controls="level-menu" aria-haspopup="true" onClick={(event) => handleOpenFilter(event,'level')}>{levelFilter === 'Filter By Level' ? levelFilter : levelFilter > 0 ? `Level ${levelFilter}` : 'Cantrips'}</Button>
+            <Button className={classes.filter} aria-controls="level-menu" aria-haspopup="true" onClick={(event) => handleOpenFilter(event,'level')}>{levelFilter === 'Filter By Level' ? levelFilter : levelFilter > 0 ? `Level ${levelFilter}` : 'Cantrips'}</Button>
             <Menu
                 id="level-menu"
                 anchorEl={levelAnchor}
@@ -162,7 +174,7 @@ const Navigation = (props) => {
                 <MenuItem id='8' onClick={handleLevelFilter}>Level 8</MenuItem>
                 <MenuItem id='9' onClick={handleLevelFilter}>Level 9</MenuItem>
             </Menu>
-            <Button aria-controls="school-menu" aria-haspopup="true" onClick={(event) => handleOpenFilter(event,'school')}>{schoolFilter}</Button>
+            <Button className={classes.filter} aria-controls="school-menu" aria-haspopup="true" onClick={(event) => handleOpenFilter(event,'school')}>{schoolFilter}</Button>
             <Menu
                 id="school-menu"
                 anchorEl={schoolAnchor}
@@ -181,7 +193,8 @@ const Navigation = (props) => {
             </Toolbar>
         </AppBar>
         <br />
-        <Typography variant='h1'>{title === 'Level 0' ? 'Cantrips' : `${title} Spells`}</Typography>
+        <Typography variant='h1' className={classes.title}>{title === 'Level 0' ? 'Cantrips' : `${title} Spells`}</Typography>
+        <br />
         </div>
     );
 }

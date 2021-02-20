@@ -27,6 +27,13 @@ const Spell = (props) => {
     const [spellInfo, setSpellInfo] = useState(null)
     const [hoverClass, setHoverClass] = useState(classes.nohover)
 
+
+    let leftVar = window.innerWidth/28
+
+    if(window.innerWidth < 812){
+        leftVar = 0
+    }
+
     useEffect(()=> {
         setIsLoading(false)
     }, [spellInfo])
@@ -74,7 +81,7 @@ const Spell = (props) => {
                 anchorEl={anchorEl}
                 marginThreshold= {8}
                 anchorReference="anchorPosition"
-                anchorPosition={{ top: 0, left: 0 }}
+                anchorPosition={{ top: 0, left: leftVar}}
                 anchorOrigin={{
                     vertical: 'top',
                     horizontal: 'left',
