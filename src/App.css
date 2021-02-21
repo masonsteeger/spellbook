@@ -10,7 +10,8 @@ html{
   width: 80%;
   margin: auto;
   background-color: #d8cbaa;
-  border: 20px solid transparent;
+  border-style: solid;
+  border-width: 20px;
   -moz-border-image: url('./icons/frayed.png') 30 repeat;
   -webkit-border-image: url('./icons/frayed.png') 30 repeat;
   -o-border-image: url('./icons/frayed.png') 30 repeat; 
