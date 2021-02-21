@@ -10,24 +10,12 @@ const SpellList = (props) => {
     useEffect(() => {
 
     }, [])
-    let sorted = props.spellDisplay.results.map(spell => {
-        return {index: spell.index,  spellName: spell.name}
-    })
 
-    sorted.sort((a, b) => {
-        if(a.spellName > b.spellName){
-            return 1
-        }
-        if(a.spellName < b.spellName){
-            return -1
-        }
-        return 0
-    })
     return(
         <div className="spell-list">
             {
-                sorted.map(spell => {
-                    return <div key={spell.slug} style={{margin: '10px 0'}}><Spell index={spell.slug} spellName = {spell.spellName}/></div>
+                props.spellDisplay.results.map(spell => {
+                    return spell.name === 'Eye bite' || spell.name === 'Ray of Sickness' ? null : <div key={spell.slug} style={{margin: '10px 0'}}><Spell index={spell.slug === 'antipathysympathy' ? 'antipathy-sympathy' : spell.slug === 'blindnessdeafness' ? 'blindness-deafness' : spell.slug === 'enlargereduce' ? 'enlarge-reduce' : spell.slug} spellName = {spell.name}/></div>
             })}
             <div className='bottom-nav'>
             {props.spellDisplay.previous ? <div><NavigateBeforeRoundedIcon onClick={() => props.setApiCall(props.spellDisplay.previous)} style={{fontSize: 100, cursor: 'pointer'}}/></div> : null}

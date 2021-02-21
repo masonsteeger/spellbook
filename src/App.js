@@ -26,10 +26,12 @@ const App = () => {
   if(!loading){
     return(
       <div className="App">
-        <Navigation setApiCall={setApiCall}/>
-        <div className='parchment'>
-          <br /><br />
-          <SpellList spellDisplay={spellDisplay} setApiCall={setApiCall}/>
+        <div className='App2'>
+          <Navigation setApiCall={setApiCall}/>
+          <div className='parchment'>
+            <br /><br />
+            <SpellList spellDisplay={spellDisplay} setApiCall={setApiCall}/>
+          </div>
         </div>
       </div>
     );

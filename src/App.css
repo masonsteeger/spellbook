@@ -1,11 +1,13 @@
 .App {
   text-align: center;
-  background-color: black;
   padding-bottom: 50px;
+}
+html{
+  background-color: black;
 }
 
 .parchment{
-  width: 90%;
+  width: 80%;
   margin: auto;
   background-color: #d8cbaa;
   border: 20px solid transparent;
