@@ -14,7 +14,7 @@ const SpellInfo = (props) => {
                     <h1>{props.data.name}</h1>
                 </div>
                 <div id='spell-level'>
-                    {props.data.level > 0 ? <h1>Level {props.data.level} Spell</h1> : <h1>Cantrip</h1>}
+                    {props.data.level > 0 ? <h1>Level {props.data.level} {props.data.school.name} Spell</h1> : <h1>{props.data.school.name} Cantrip</h1>}
                 </div>
             </div>
             <div className='game-info'>
@@ -39,7 +39,6 @@ const SpellInfo = (props) => {
                 {props.data.material ? <div className='game-item'><h2>Materials Needed: {props.data.material}</h2></div> : null}
             </div>
             {props.data.damage ? props.data.damage.damage_at_slot_level ? <div className='game-item'><h2>Damage At Slot Level:</h2>{Object.keys(props.data.damage.damage_at_slot_level).map((key, index)=> {return <h2 key={index}>Level {Object.keys(props.data.damage.damage_at_slot_level)[index]} :{props.data.damage.damage_at_slot_level[key]}</h2>})}</div> :null : null}
-            <h3>School: {props.data.school.name}</h3>
             <h3>Classes: {classes.join(', ')}</h3>
             {subclasses > 0 ? <h3>Subclasses: {subclasses.join(', ')}</h3> : <h3>Subclasses: N/A</h3>}  
             <h4>Description:</h4>

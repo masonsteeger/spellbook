@@ -3,12 +3,14 @@ import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Collapse from '@material-ui/core/Collapse';
+import InputBase from '@material-ui/core/InputBase';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import Menu from '@material-ui/core/Menu';
 import MenuIcon from '@material-ui/icons/Menu';
 import MenuItem from '@material-ui/core/MenuItem'
+import SearchIcon from '@material-ui/icons/Search';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -40,7 +42,40 @@ const useStyles = makeStyles((theme) => ({
         flexGrow: 1,
         color: 'white', 
         fontSize: '20px'
-    }
+    },
+    search: {
+        position: 'relative',
+        borderRadius: theme.shape.borderRadius,
+
+        marginRight: theme.spacing(2),
+        marginLeft: 0,
+        width: '100%',
+        [theme.breakpoints.up('sm')]: {
+          marginLeft: theme.spacing(3),
+          width: 'auto',
+        },
+      },
+      searchIcon: {
+        padding: theme.spacing(0, 2),
+        height: '100%',
+        position: 'absolute',
+        pointerEvents: 'none',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+      },
+      inputRoot: {
+        color: 'inherit',
+      },
+      inputInput: {
+        padding: theme.spacing(1, 1, 1, 0),
+        paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
+        transition: theme.transitions.create('width'),
+        width: '100%',
+        [theme.breakpoints.up('md')]: {
+          width: '20ch',
+        },
+      }
   }));
 
 const Navigation = (props) => {
@@ -54,7 +89,8 @@ const Navigation = (props) => {
     const [charClass, setCharClass] = useState('')
     const [level, setLevel] = useState('')
     const [school, setSchool] = useState('')
-    const [checked, setChecked] = React.useState(false);
+    const [checked, setChecked] = useState(false);
+    const [searchValue, setSearchValue] = useState('')
 
     const handleChange = () => {
       setChecked((prev) => !prev);
@@ -95,36 +131,36 @@ const Navigation = (props) => {
 
     useEffect(() => {
         props.setApiCall(`https://api.open5e.com/spells/?dnd_class__icontains=${charClass}&level__iexact=${level}&school__iexact=${school}`)
-        }, [charClass, level, school])
+    }, [charClass, level, school])
 
-     const handleClassFilter = (event) => {
+    const handleClassFilter = (event) => {
         setClassFilter(event.target.id)
         setCharClass(event.target.id)
         setClassAnchor(null)
-     }
+    }
 
-     const handleLevelFilter = (event) => {
+    const handleLevelFilter = (event) => {
         setLevelFilter(event.target.id)
         setLevel(event.target.id)
         setLevelAnchor(null)
-     }
+    }
 
-     const handleSchoolFilter = (event) => {
+    const handleSchoolFilter = (event) => {
         setSchoolFilter(event.target.id)
         setSchool(event.target.id)
         setSchoolAnchor(null)
-     }
+    }
 
-     const resetFilters = () => {
+    const resetFilters = () => {
         setCharClass('')
         setLevel('')
         setSchool('')
         setClassFilter('Filter By Class')
         setLevelFilter('Filter By Level')
         setSchoolFilter('Filter By School')
-     }
+    }
 
-     const resetFilter = (event) => {
+    const resetFilter = (event) => {
         if(event.target.id === 'level'){
             setLevel('')
             setLevelFilter('Filter By Level')
@@ -140,8 +176,19 @@ const Navigation = (props) => {
             setSchoolFilter('Filter By School')
             setSchoolAnchor(null)
         }
+    }
 
-     }
+    const handleSearch = (event) => {
+        resetFilters();
+        props.setApiCall(`https://api.open5e.com/spells/?search=${event.target.value}`)
+    }
+
+    const handleEnter = (event) => {
+        if(event.keyCode === 13){
+            event.target.blur()
+            event.target.value = ''
+        }
+    }
 
     return (
         <div className={classes.root}>
@@ -157,6 +204,12 @@ const Navigation = (props) => {
             </Toolbar>
             <Collapse in={checked}>
                 <Toolbar className={classes.navbar}>
+                <div className={classes.search}>
+                    <div className={classes.searchIcon}>
+                        <SearchIcon />
+                    </div>
+                    <InputBase inputProps={{ 'aria-label': 'search' }} classes={{root: classes.inputRoot,input: classes.inputInput}} onKeyDown={(event) => handleEnter(event)} onChange={handleSearch} placeholder='Search All Spells...'/>
+                </div>
                 <Button className={classes.filter} aria-controls="class-menu" aria-haspopup="true" onClick={(event) => handleOpenFilter(event,'class')}>{classFilter}</Button>
                 <Menu
                     id="class-menu"

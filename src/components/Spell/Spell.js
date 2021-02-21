@@ -10,6 +10,7 @@ import './Spell.css'
 const useStyles = makeStyles((theme) => ({
     paper: {
       padding: theme.spacing(1),
+      overflow: 'break-word'
     },
     hover: {
         textDecoration: 'underline'
