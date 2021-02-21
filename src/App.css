@@ -11,6 +11,9 @@ html{
   margin: auto;
   background-color: #d8cbaa;
   border: 20px solid transparent;
+  -moz-border-image: url('./icons/frayed.png') 30 repeat;
+  -webkit-border-image: url('./icons/frayed.png') 30 repeat;
+  -o-border-image: url('./icons/frayed.png') 30 repeat; 
   border-image: url('./icons/frayed.png') 30 repeat;
   border-radius: 5px;
 }
